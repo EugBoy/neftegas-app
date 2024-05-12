@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 import numpy as np
 import math
 
@@ -15,70 +16,81 @@ for i in range(12):
 tk.Label(root, text="Исходные данные").grid(row=0, column=0, columnspan=6, stick='ew')
 tk.Label(root, text="Результат расчёта").grid(row=0, column=6, columnspan=6, stick='ew')
 
-tk.Label(root, text="Компонент").grid(row=1, column=1, columnspan=2)
-tk.Label(root, text="Мольная доля").grid(row=1, column=3, columnspan=2)
+tk.Label(root, text="Компонент").grid(row=1, column=1, columnspan=2, pady=(15, 0))
+tk.Label(root, text="Мольная доля, %").grid(row=1, column=3, columnspan=2, pady=(15, 0))
 
-tk.Label(root, text="C1").grid(row=2, column=1, columnspan=2)
+# Create a vertical Frame
+vertical = Frame(root, bg="black", height=500, width=2)
+vertical.place(x=400, y=0)
+
+# Create a horizontal Frame
+horizontal = Frame(root, bg="black", height=1, width=800)
+horizontal.place(x=0, y=20)
+# Create a horizontal Frame
+horizontal1 = Frame(root, bg="black", height=1, width=400)
+horizontal1.place(x=0, y=310)
+
+tk.Label(root, text="C1").grid(row=2, column=1, columnspan=2, pady=(0, 5))
 C1 = tk.Entry(root)
 C1.grid(row=2, column=3, columnspan=2)
 
-tk.Label(root, text="C2").grid(row=3, column=1, columnspan=2)
+tk.Label(root, text="C2").grid(row=3, column=1, columnspan=2, pady=(0, 5))
 C2 = tk.Entry(root)
 C2.grid(row=3, column=3, columnspan=2)
 
-tk.Label(root, text="C3").grid(row=4, column=1, columnspan=2)
+tk.Label(root, text="C3").grid(row=4, column=1, columnspan=2, pady=(0, 5))
 C3 = tk.Entry(root)
 C3.grid(row=4, column=3, columnspan=2)
 
-tk.Label(root, text="NC4").grid(row=5, column=1, columnspan=2)
+tk.Label(root, text="NC4").grid(row=5, column=1, columnspan=2, pady=(0, 5))
 NC4 = tk.Entry(root)
 NC4.grid(row=5, column=3, columnspan=2)
 
-tk.Label(root, text="NC5").grid(row=6, column=1, columnspan=2)
+tk.Label(root, text="NC5").grid(row=6, column=1, columnspan=2, pady=(0, 5))
 NC5 = tk.Entry(root)
 NC5.grid(row=6, column=3, columnspan=2)
 
-tk.Label(root, text="C6").grid(row=7, column=1, columnspan=2)
+tk.Label(root, text="C6").grid(row=7, column=1, columnspan=2, pady=(0, 5))
 C6 = tk.Entry(root)
 C6.grid(row=7, column=3, columnspan=2)
 
-tk.Label(root, text="N2").grid(row=8, column=1, columnspan=2)
+tk.Label(root, text="N2").grid(row=8, column=1, columnspan=2, pady=(0, 5))
 N2 = tk.Entry(root)
 N2.grid(row=8, column=3, columnspan=2)
 
-tk.Label(root, text="CO2").grid(row=9, column=1, columnspan=2)
+tk.Label(root, text="CO2").grid(row=9, column=1, columnspan=2, pady=(0, 5))
 C02 = tk.Entry(root)
 C02.grid(row=9, column=3, columnspan=2)
 
-tk.Label(root, text="H2S").grid(row=10, column=1, columnspan=2)
+tk.Label(root, text="H2S").grid(row=10, column=1, columnspan=2, pady=(0, 5))
 H2S = tk.Entry(root)
 H2S.grid(row=10, column=3, columnspan=2)
 
-tk.Label(root, text="Пластовое давление").grid(row=11, column=1, columnspan=2)
+tk.Label(root, text="Пластовое давление,").grid(row=11, column=1, columnspan=2, pady=(50, 0))
 PP = tk.Entry(root)
-PP.grid(row=11, column=3, columnspan=2)
+PP.grid(row=11, column=3, columnspan=2, pady=(50, 0))
 
-tk.Label(root, text="Пластовая температура").grid(row=12, column=1, columnspan=2)
+tk.Label(root, text="Пластовая температура, K").grid(row=12, column=1, columnspan=2, pady=(10, 0))
 PT = tk.Entry(root)
-PT.grid(row=12, column=3, columnspan=2)
+PT.grid(row=12, column=3, columnspan=2, pady=(10, 0))
 
-tk.Button(root, text='Рассчитать', command=lambda: calcZ()).grid(row=13, column=2, columnspan=2, sticky='ew')
+tk.Button(root, text='Рассчитать', command=lambda: calcZ()).grid(row=13, column=2, columnspan=2, sticky='ew', pady=(40, 0))
 
-tk.Label(root, text="По СРК").grid(row=4, column=7, columnspan=2)
+tk.Label(root, text="По СРК").grid(row=3, column=7, columnspan=2)
 z1 = tk.StringVar()
 z1.set('')
 SRK = tk.Entry(root, textvariable=z1, state='readonly')
-SRK.grid(row=4, column=9, columnspan=2)
+SRK.grid(row=3, column=9, columnspan=2)
 tk.Label(root, text="По П-Р.").grid(row=5, column=7, columnspan=2)
 z2 = tk.StringVar()
 z2.set('')
 PPR = tk.Entry(root, textvariable=z2, state='readonly')
 PPR.grid(row=5, column=9, columnspan=2)
-tk.Label(root, text="По Гуревичу-Платонову").grid(row=6, column=7, columnspan=2)
+tk.Label(root, text="По Гуревичу-Платонову").grid(row=7, column=7, columnspan=2)
 z3 = tk.StringVar()
 z3.set('')
 PGP = tk.Entry(root, textvariable=z3, state='readonly')
-PGP.grid(row=6, column=9, columnspan=2)
+PGP.grid(row=7, column=9, columnspan=2)
 
 
 # Разделить массив на подмамассивы(сделать матрицу)
@@ -90,9 +102,9 @@ def split_array(array, num):
 def calcZ():
     # Исходные данные
     xj = [
-        float(C1.get()), float(C2.get()), float(C3.get()),
-        float(NC4.get()), float(NC5.get()), float(C6.get()),
-        float(N2.get()), float(C02.get()), float(H2S.get())
+        float(C1.get())/100, float(C2.get())/100, float(C3.get())/100,
+        float(NC4.get())/100, float(NC5.get())/100, float(C6.get())/100,
+        float(N2.get())/100, float(C02.get())/100, float(H2S.get())/100
     ]
     xk = xj
 
