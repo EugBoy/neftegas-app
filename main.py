@@ -90,18 +90,31 @@ tk.Button(root, text='Рассчитать', command=lambda: calcZ()).grid(row=1
 tk.Label(root, text="По СРК:").grid(row=3, column=7, columnspan=2)
 z1 = tk.StringVar()
 z1.set('')
+
 SRK = tk.Entry(root, textvariable=z1, state='readonly')
 SRK.grid(row=3, column=9, columnspan=2)
+
 tk.Label(root, text="По П-Р:").grid(row=5, column=7, columnspan=2)
 z2 = tk.StringVar()
 z2.set('')
+
 PPR = tk.Entry(root, textvariable=z2, state='readonly')
 PPR.grid(row=5, column=9, columnspan=2)
+
 tk.Label(root, text="По Гуревичу-Платонову:").grid(row=7, column=7, columnspan=2)
 z3 = tk.StringVar()
 z3.set('')
 PGP = tk.Entry(root, textvariable=z3, state='readonly')
 PGP.grid(row=7, column=9, columnspan=2)
+
+tk.Label(root, text="Критическое давление:").grid(row=9, column=7, columnspan=2)
+Pc = tk.StringVar()
+Pc.set('')
+
+PC = tk.Entry(root, textvariable=Pc, state='readonly')
+PC.grid(row=9, column=9, columnspan=2)
+
+
 
 
 # Разделить массив на подмамассивы(сделать матрицу)
@@ -301,16 +314,19 @@ def calcZ():
         Mj.append(m[j] * xj[j])
 
     M = np.sum(Mj)
-    
+
     print("M =", M)
 
-    Pс = (0.006894 * (709.604 - (M / 28.96) * 58.718))
-
-    Tс = ((170.491 + (M / 28.96) * 307.44) / 1.8)
-
+    #Pс = (0.006894 * (709.604 - (M / 28.96) * 58.718))
+    global Pc
+    Pc.set(np.sum(np.array(xj) * np.array(Pcj)))
+    PC.insert(0, Pc)
+    #Tс = ((170.491 + (M / 28.96) * 307.44) / 1.8)
+    Pc = np.sum(np.array(xj) * np.array(Pcj))
+    Tc = np.sum(np.array(xj) * np.array(Tcj))
     global z3
 
-    z3.set((0.4 * math.log((Tпл / Tс)) + 0.73) ** (Pпл / Pс) + 0.1 * (Pпл / Pс))
+    z3.set((0.4 * math.log((Tпл / Tc)) + 0.73) ** (Pпл / Pc) + 0.1 * (Pпл / Pc))
 
     print("z3 = ", z3)
 
