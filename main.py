@@ -1,9 +1,10 @@
 import tkinter as tk
+from tkinter import *
 import numpy as np
 import math
 
 root = tk.Tk()
-root.title("Рассчёт коэффициента сверхсжимаемости газа")
+root.title("Расчёт коэффициента сверхсжимаемости газа")
 root.geometry("800x500")
 root.resizable(False, False)
 photo = tk.PhotoImage(file="favicon.png")
@@ -15,70 +16,105 @@ for i in range(12):
 tk.Label(root, text="Исходные данные").grid(row=0, column=0, columnspan=6, stick='ew')
 tk.Label(root, text="Результат расчёта").grid(row=0, column=6, columnspan=6, stick='ew')
 
-tk.Label(root, text="Компонент").grid(row=1, column=1, columnspan=2)
-tk.Label(root, text="Мольная доля").grid(row=1, column=3, columnspan=2)
+tk.Label(root, text="Компонент").grid(row=1, column=1, columnspan=2, pady=(15, 0))
+tk.Label(root, text="Мольная доля, %").grid(row=1, column=3, columnspan=2, pady=(15, 0))
 
-tk.Label(root, text="C1").grid(row=2, column=1, columnspan=2)
+# Create a vertical Frame
+vertical = Frame(root, bg="black", height=500, width=2)
+vertical.place(x=400, y=0)
+
+# Create a horizontal Frame
+horizontal = Frame(root, bg="black", height=1, width=800)
+horizontal.place(x=0, y=20)
+# Create a horizontal Frame
+horizontal1 = Frame(root, bg="black", height=1, width=400)
+horizontal1.place(x=0, y=310)
+
+tk.Label(root, text="C1").grid(row=2, column=1, columnspan=2, pady=(0, 5))
 C1 = tk.Entry(root)
+C1.insert(0, 98.22)
 C1.grid(row=2, column=3, columnspan=2)
 
-tk.Label(root, text="C2").grid(row=3, column=1, columnspan=2)
+tk.Label(root, text="C2").grid(row=3, column=1, columnspan=2, pady=(0, 5))
 C2 = tk.Entry(root)
+C2.insert(0, 0.95)
 C2.grid(row=3, column=3, columnspan=2)
 
-tk.Label(root, text="C3").grid(row=4, column=1, columnspan=2)
+tk.Label(root, text="C3").grid(row=4, column=1, columnspan=2, pady=(0, 5))
 C3 = tk.Entry(root)
+C3.insert(0, 0.55)
 C3.grid(row=4, column=3, columnspan=2)
 
-tk.Label(root, text="NC4").grid(row=5, column=1, columnspan=2)
+tk.Label(root, text="NC4").grid(row=5, column=1, columnspan=2, pady=(0, 5))
 NC4 = tk.Entry(root)
+NC4.insert(0, 0)
 NC4.grid(row=5, column=3, columnspan=2)
 
-tk.Label(root, text="NC5").grid(row=6, column=1, columnspan=2)
+tk.Label(root, text="NC5").grid(row=6, column=1, columnspan=2, pady=(0, 5))
 NC5 = tk.Entry(root)
+NC5.insert(0, 0)
 NC5.grid(row=6, column=3, columnspan=2)
 
-tk.Label(root, text="C6").grid(row=7, column=1, columnspan=2)
+tk.Label(root, text="C6").grid(row=7, column=1, columnspan=2, pady=(0, 5))
 C6 = tk.Entry(root)
+C6.insert(0, 0)
 C6.grid(row=7, column=3, columnspan=2)
 
-tk.Label(root, text="N2").grid(row=8, column=1, columnspan=2)
+tk.Label(root, text="N2").grid(row=8, column=1, columnspan=2, pady=(0, 5))
 N2 = tk.Entry(root)
+N2.insert(0, 0)
 N2.grid(row=8, column=3, columnspan=2)
 
-tk.Label(root, text="CO2").grid(row=9, column=1, columnspan=2)
-C02 = tk.Entry(root)
-C02.grid(row=9, column=3, columnspan=2)
+tk.Label(root, text="CO2").grid(row=9, column=1, columnspan=2, pady=(0, 5))
+CO2 = tk.Entry(root)
+CO2.insert(0, 0.2)
+CO2.grid(row=9, column=3, columnspan=2)
 
-tk.Label(root, text="H2S").grid(row=10, column=1, columnspan=2)
+tk.Label(root, text="H2S").grid(row=10, column=1, columnspan=2, pady=(0, 5))
 H2S = tk.Entry(root)
+H2S.insert(0, 0.08)
 H2S.grid(row=10, column=3, columnspan=2)
 
-tk.Label(root, text="Пластовое давление").grid(row=11, column=1, columnspan=2)
+tk.Label(root, text="Пластовое давление, МПа").grid(row=11, column=1, columnspan=2, pady=(50, 0))
 PP = tk.Entry(root)
-PP.grid(row=11, column=3, columnspan=2)
+PP.insert(0, 6.57045)
+PP.grid(row=11, column=3, columnspan=2, pady=(50, 0))
 
-tk.Label(root, text="Пластовая температура").grid(row=12, column=1, columnspan=2)
+tk.Label(root, text="Пластовая температура, K").grid(row=12, column=1, columnspan=2, pady=(10, 0))
 PT = tk.Entry(root)
-PT.grid(row=12, column=3, columnspan=2)
+PT.insert(0, 307)
+PT.grid(row=12, column=3, columnspan=2, pady=(10, 0))
 
-tk.Button(root, text='Рассчитать', command=lambda: calcZ()).grid(row=13, column=2, columnspan=2, sticky='ew')
+tk.Button(root, text='Рассчитать', command=lambda: calcZ()).grid(row=13, column=2, columnspan=2, sticky='ew', pady=(40, 0))
 
-tk.Label(root, text="По СРК").grid(row=4, column=7, columnspan=2)
+tk.Label(root, text="По СРК:").grid(row=3, column=7, columnspan=2)
 z1 = tk.StringVar()
 z1.set('')
+
 SRK = tk.Entry(root, textvariable=z1, state='readonly')
-SRK.grid(row=4, column=9, columnspan=2)
-tk.Label(root, text="По П-Р.").grid(row=5, column=7, columnspan=2)
+SRK.grid(row=3, column=9, columnspan=2)
+
+tk.Label(root, text="По П-Р:").grid(row=5, column=7, columnspan=2)
 z2 = tk.StringVar()
 z2.set('')
+
 PPR = tk.Entry(root, textvariable=z2, state='readonly')
 PPR.grid(row=5, column=9, columnspan=2)
-tk.Label(root, text="По Гуревичу-Платонову").grid(row=6, column=7, columnspan=2)
+
+tk.Label(root, text="По Гуревичу-Платонову:").grid(row=7, column=7, columnspan=2)
 z3 = tk.StringVar()
 z3.set('')
 PGP = tk.Entry(root, textvariable=z3, state='readonly')
-PGP.grid(row=6, column=9, columnspan=2)
+PGP.grid(row=7, column=9, columnspan=2)
+
+tk.Label(root, text="Критическое давление:").grid(row=9, column=7, columnspan=2)
+Pc = tk.StringVar()
+Pc.set('')
+
+PC = tk.Entry(root, textvariable=Pc, state='readonly')
+PC.grid(row=9, column=9, columnspan=2)
+
+
 
 
 # Разделить массив на подмамассивы(сделать матрицу)
@@ -90,9 +126,9 @@ def split_array(array, num):
 def calcZ():
     # Исходные данные
     xj = [
-        float(C1.get()), float(C2.get()), float(C3.get()),
-        float(NC4.get()), float(NC5.get()), float(C6.get()),
-        float(N2.get()), float(C02.get()), float(H2S.get())
+        float(C1.get())/100, float(C2.get())/100, float(C3.get())/100,
+        float(NC4.get())/100, float(NC5.get())/100, float(C6.get())/100,
+        float(N2.get())/100, float(CO2.get())/100, float(H2S.get())/100
     ]
     xk = xj
 
@@ -220,15 +256,15 @@ def calcZ():
     # Расчёт alpha_m и betta_m для П-Р
     xjxk = (np.outer(xj, xk))
 
-    alpha_m1 = np.sum(np.dot(xjxk, alpha_jk1))
+    alpha_m1 = np.sum(np.array(xjxk) * np.array(alpha_jk1))
 
     betta_m1 = np.sum(np.dot(xj, bj1))
 
     # ------------------------------------------------------------------------------------
     # Расчёт alpha_m и betta_m для СРК
-    alpha_m2 = np.sum(np.dot(xjxk, alpha_jk2))
+    alpha_m2 = np.sum(np.array(xjxk) * np.array(alpha_jk2))
 
-    betta_m2 = np.sum(np.dot(xj, bj2))
+    betta_m2 = np.sum(np.array(xj) * np.array(bj2))
 
     # ------------------------------------------------------------------------------------
 
@@ -248,8 +284,10 @@ def calcZ():
 
     # Расчёт z для П-Р
     coeff1 = [1, -(1 - B1), (A1 - 2 * B1 - 3 * (B1 ** 2)), -(A1 * B1 - ((B1 ** 2) - (B1 ** 3)))]
+
     global z1
-    z1.set(max(np.roots(coeff1)))
+
+    z1.set(max([np.real(x) for x in np.roots(coeff1)]))
 
     PPR.insert(0, z1)
 
@@ -258,8 +296,10 @@ def calcZ():
 
     # Расчёт z для П-Р
     coeff2 = [1, -(1), (A2 - 1 * B2 - 1 * (B2 ** 2)), -(A2 * B2)]
+
     global z2
-    z2.set(max(np.roots(coeff2)))
+
+    z2.set(max([np.real(x) for x in np.roots(coeff2)]))
 
     print("z ПО СРК = ", z2)
 
@@ -274,14 +314,19 @@ def calcZ():
         Mj.append(m[j] * xj[j])
 
     M = np.sum(Mj)
+
     print("M =", M)
 
-    Pс = (0.006894 * (709.604 - (M / 28.96) * 58.718))
-
-    Tс = ((170.491 + (M / 28.96) * 307.44) / 1.8)
-
+    #Pс = (0.006894 * (709.604 - (M / 28.96) * 58.718))
+    global Pc
+    Pc.set(np.sum(np.array(xj) * np.array(Pcj)))
+    PC.insert(0, Pc)
+    #Tс = ((170.491 + (M / 28.96) * 307.44) / 1.8)
+    Pc = np.sum(np.array(xj) * np.array(Pcj))
+    Tc = np.sum(np.array(xj) * np.array(Tcj))
     global z3
-    z3.set((0.4 * math.log((Tпл / Tс)) + 0.73) ** (Pпл / Pс) + 0.1 * (Pпл / Pс))
+
+    z3.set((0.4 * math.log((Tпл / Tc)) + 0.73) ** (Pпл / Pc) + 0.1 * (Pпл / Pc))
 
     print("z3 = ", z3)
 
