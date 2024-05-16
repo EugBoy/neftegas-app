@@ -26,7 +26,11 @@ vertical.place(x=400, y=0)
 # Create a horizontal Frame
 horizontal = Frame(root, bg="black", height=1, width=800)
 horizontal.place(x=0, y=20)
+
 # Create a horizontal Frame
+horizontal1 = Frame(root, bg="black", height=1, width=400)
+horizontal1.place(x=400, y=240)
+
 horizontal1 = Frame(root, bg="black", height=1, width=400)
 horizontal1.place(x=0, y=310)
 
@@ -101,19 +105,25 @@ z2.set('')
 PPR = tk.Entry(root, textvariable=z2, state='readonly')
 PPR.grid(row=5, column=9, columnspan=2)
 
-tk.Label(root, text="По Гуревичу-Платонову:").grid(row=7, column=7, columnspan=2)
+tk.Label(root, text="По Гуревичу-Платонову:").grid(row=10, column=7, columnspan=2)
 z3 = tk.StringVar()
 z3.set('')
 PGP = tk.Entry(root, textvariable=z3, state='readonly')
-PGP.grid(row=7, column=9, columnspan=2)
+PGP.grid(row=10, column=9, columnspan=2)
 
-tk.Label(root, text="Критическое давление:").grid(row=9, column=7, columnspan=2)
+tk.Label(root, text="Критическое давление, МПа:").grid(row=11, column=7, columnspan=2, pady=(50, 0))
 Pc = tk.StringVar()
 Pc.set('')
 
 PC = tk.Entry(root, textvariable=Pc, state='readonly')
-PC.grid(row=9, column=9, columnspan=2)
+PC.grid(row=11, column=9, columnspan=2, pady=(50, 0))
 
+tk.Label(root, text="Критическая температура, K:").grid(row=12, column=7, columnspan=2, pady=(10, 0))
+Tc = tk.StringVar()
+Tc.set('')
+
+TC = tk.Entry(root, textvariable=Tc, state='readonly')
+TC.grid(row=12, column=9, columnspan=2, pady=(10, 0))
 
 
 
@@ -319,8 +329,13 @@ def calcZ():
 
     #Pс = (0.006894 * (709.604 - (M / 28.96) * 58.718))
     global Pc
-    Pc.set(np.sum(np.array(xj) * np.array(Pcj)))
+    Pc.set(np.sum(np.array(xj) * np.array(Pcj))/1000000)
     PC.insert(0, Pc)
+
+    global Tc
+    Tc.set(np.sum(np.array(xj) * np.array(Tcj)))
+    TC.insert(0, Tc)
+
     #Tс = ((170.491 + (M / 28.96) * 307.44) / 1.8)
     Pc = np.sum(np.array(xj) * np.array(Pcj))
     Tc = np.sum(np.array(xj) * np.array(Tcj))
