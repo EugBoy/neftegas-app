@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import *
 import numpy as np
-import math
 
 root = tk.Tk()
 root.title("Расчёт коэффициента сверхсжимаемости газа")
@@ -304,7 +303,7 @@ def calcZ():
     print("z ПО П-Р = ", z1)
     # ------------------------------------------------------------------------------------
 
-    # Расчёт z для П-Р
+    # Расчёт z для СРК
     coeff2 = [1, -(1), (A2 - 1 * B2 - 1 * (B2 ** 2)), -(A2 * B2)]
 
     global z2
@@ -341,7 +340,7 @@ def calcZ():
     Tc = np.sum(np.array(xj) * np.array(Tcj))
     global z3
 
-    z3.set((0.4 * math.log((Tпл / Tc)) + 0.73) ** (Pпл / Pc) + 0.1 * (Pпл / Pc))
+    z3.set((0.4 * np.emath.log10((Tпл / Tc)) + 0.73) ** (Pпл / Pc) + 0.1 * (Pпл / Pc))
 
     print("z3 = ", z3)
 
